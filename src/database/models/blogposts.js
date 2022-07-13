@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
      * @param {import('sequelize').DataTypes} DataTypes
      */
 module.exports = (sequelize, DataTypes) => {
-  const BlogPosts = DataTypes.define('BlogPosts', {
+  const BlogPosts = sequelize.define('BlogPosts', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    userID: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {

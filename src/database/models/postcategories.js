@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize')
      * @param {import('sequelize').DataTypes} DataTypes
      */
 module.exports = (sequelize, DataTypes) => {
-  const PostCategories = DataTypes.define('PostCategories', {
+  const PostCategories = sequelize.define('PostCategories', {
     postId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -27,5 +27,5 @@ module.exports = (sequelize, DataTypes) => {
   {
     tableName: 'PostCategories'
   });
-  return postCategories;
+  return PostCategories;
 };
