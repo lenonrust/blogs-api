@@ -18,6 +18,10 @@ const categoriesService = {
     return findCategory;
   },
 
+  async getAll() {
+    const categories = await models.Category.findAll({ raw: true });
+    return categories;
+  },
 };
 
 module.exports = categoriesService;
