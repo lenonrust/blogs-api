@@ -16,8 +16,15 @@ const throwConflict = (message) => {
   throw err;
 };
 
+const throwTokenNotFound = (message) => {
+  const err = new Error(message);
+  err.name = 'TokenNotFound';
+  throw err;
+};
+
 module.exports = {
   throwNotFoundError,
   throwInvalidFields,
   throwConflict,
+  throwTokenNotFound,
 };

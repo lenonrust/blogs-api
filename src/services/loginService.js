@@ -2,12 +2,22 @@ require('dotenv').config();
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const models = require('../database/models');
-const { throwInvalidFields } = require('./utils');
+const { throwInvalidFields, throwTokenNotFound } = require('./utils');
 
 const secret = process.env.JWT_SECRET;
 
 const loginService = {
   
+  async validateToken(authorization) {
+    const schema = Joi.string().required();
+    try {
+    const result = await schema.validateAsync(authorization);
+    return result;
+    } catch (error) {
+      throwTokenNotFound('Token not found');
+    }
+  },
+
   async validateBodyLogin(body) {
     const schema = Joi.object({
       email: Joi.string().required().email().messages({
@@ -29,8 +39,12 @@ const loginService = {
   },
 
   async readToken(token) {
-    const { data } = jwt.verify(token, secret);
-    return data;
+    try {
+      const { data } = jwt.verify(token, secret);
+      return data;
+    } catch (error) {
+      throwTokenNotFound('Expired or invalid token');
+    }
   },
 
   async checkByEmail(body) {

@@ -8,6 +8,13 @@ const usersController = {
     const token = await loginService.makeToken(newUser);
     res.status(201).json({ token });
   },
+
+  async getAll(req, res) {
+    await loginService.validateToken(req.headers.authorization);
+    await loginService.readToken(req.headers.authorization);
+    const list = await usersService.getAll();
+    res.json(list);
+  },
 };
 
 module.exports = usersController;

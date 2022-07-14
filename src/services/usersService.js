@@ -18,10 +18,18 @@ const usersService = {
   async create(value) {
     const { email } = value;
     const findUser = await models.User.findOne({ where: { email } });
-    // const exist = findUser.toJSON();
     if (findUser) throwConflict('User already registered'); 
     const user = await models.User.create(value, { raw: true });
     return user;
+  },
+
+  async getAll() {
+    const list = await models.User.findAll(
+      { attributes: { exclude: ['password'] } },
+      { raw: true },
+  );
+
+    return list;
   },
 };
 

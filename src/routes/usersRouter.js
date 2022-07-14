@@ -5,4 +5,6 @@ const usersRouter = Router();
 
 usersRouter.post('/', usersController.create);
 
+usersRouter.get('/', usersController.getAll);
+
 module.exports = usersRouter;
