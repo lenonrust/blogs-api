@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize')
      * @param {import('sequelize').DataTypes} DataTypes
      */
 module.exports = (sequelize, DataTypes) => {
-  const PostCategories = sequelize.define('PostCategories', {
+  const PostCategories = sequelize.define('PostCategory', {
     postId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -25,7 +25,25 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, 
   {
-    tableName: 'PostCategories'
+    tableName: 'PostCategories',
+    timestamps: false,
   });
+
+    PostCategories.associate = (models) => {
+      models.Category.belongsToMany(models.BlogPost, { 
+        through: PostCategories,
+        foreignKey: 'postId',
+        otherKey:'categoryId',
+        as: 'categories',
+      });
+    models.BlogPost.belongsToMany(models.Category, { 
+      through: PostCategories,
+      foreignKey: 'categoryId', 
+      otherKey:'postId',
+      as: 'posts',
+    });
+  };
+
+
   return PostCategories;
 };
