@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize')
      * @param {import('sequelize').DataTypes} DataTypes
      */
 module.exports = (sequelize, DataTypes) => {
-  const Categories = sequelize.define('Categories', {
+  const Categories = sequelize.define('Category', {
     id: {
       allowNull: false,
       autoIncrement: true,
