@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
      * @param {import('sequelize').DataTypes} DataTypes
      */
 module.exports = (sequelize, DataTypes) => {
-  const BlogPosts = sequelize.define('BlogPosts', {
+  const BlogPost = sequelize.define('BlogPost', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -36,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
   }, 
   {
     tableName: 'BlogPosts',
+    timestamps: false,
   });
-  return BlogPosts;
+  BlogPost.associate = (models) => {
+    BlogPost.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
+  };
+  return BlogPost;
 };
