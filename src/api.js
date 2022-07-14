@@ -4,11 +4,14 @@ const loginRouter = require('./routes/loginRouter');
 
 const errorMiddlewareHandler = require('./middlewares/errorMiddlewareHandler');
 const usersRouter = require('./routes/usersRouter');
+const categoriesRouter = require('./routes/categoriesRouter');
 // ...
 
 const app = express();
 
 app.use(express.json());
+
+app.use('/categories', categoriesRouter);
 
 app.use('/login', loginRouter);
 
