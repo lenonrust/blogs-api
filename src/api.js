@@ -3,6 +3,7 @@ require('express-async-errors');
 const loginRouter = require('./routes/loginRouter');
 
 const errorMiddlewareHandler = require('./middlewares/errorMiddlewareHandler');
+const usersRouter = require('./routes/usersRouter');
 // ...
 
 const app = express();
@@ -10,6 +11,8 @@ const app = express();
 app.use(express.json());
 
 app.use('/login', loginRouter);
+
+app.use('/user', usersRouter);
 
 app.use(errorMiddlewareHandler);
 // ...

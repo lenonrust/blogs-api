@@ -1,4 +1,4 @@
-const throwNotFoundError = (message = 'Some required fields are missing') => {
+const throwNotFoundError = (message) => {
   const err = new Error(message);
   err.name = 'NotFoundError';
   throw err;
@@ -10,7 +10,14 @@ const throwInvalidFields = (message = 'Invalid fields') => {
   throw err;
 };
 
+const throwConflict = (message) => {
+  const err = new Error(message);
+  err.name = 'Conflict';
+  throw err;
+};
+
 module.exports = {
   throwNotFoundError,
   throwInvalidFields,
+  throwConflict,
 };
