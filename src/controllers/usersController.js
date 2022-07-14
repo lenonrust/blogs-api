@@ -15,6 +15,13 @@ const usersController = {
     const list = await usersService.getAll();
     res.json(list);
   },
+
+  async getById(req, res) {
+    await loginService.validateToken(req.headers.authorization);
+    await loginService.readToken(req.headers.authorization);
+    const user = await usersService.getById(req.params.id);
+    res.json(user);
+  },
 };
 
 module.exports = usersController;

@@ -1,7 +1,7 @@
 const errors = {
   ValidationError: 400,
   InvalidFields: 400,
-  NotFoundError: 400,
+  NotFoundError: 404,
   Conflict: 409,
   TokenNotFound: 401,
 };
@@ -14,7 +14,6 @@ const errors = {
  */
 const errorMiddlewareHandler = ({ name, message }, _req, res, _next) => {
   const status = errors[name];
-  console.log(message);
   if (!status) return res.sendStatus(500);
   res.status(status).json({ message });
 };

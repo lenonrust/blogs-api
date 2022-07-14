@@ -1,7 +1,7 @@
 require('dotenv').config();
 const Joi = require('joi');
 const models = require('../database/models');
-const { throwConflict } = require('./utils');
+const { throwConflict, throwNotFoundError } = require('./utils');
 
 const usersService = {
   async validateAddBody(body) {
@@ -28,9 +28,18 @@ const usersService = {
       { attributes: { exclude: ['password'] } },
       { raw: true },
   );
-
     return list;
   },
+
+  async getById(id) {
+    const findUser = await models.User.findOne({
+       where: { id }, 
+       attributes: { exclude: ['password'] } });
+    if (!findUser) throwNotFoundError('User does not exist');
+    const user = findUser.toJSON();
+    return user;
+  },
+
 };
 
 module.exports = usersService;
