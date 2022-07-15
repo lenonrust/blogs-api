@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const models = require('../database/models');
+const { throwCategoryNotFoundError } = require('./utils');
 
 const categoriesService = {
 
@@ -22,6 +23,13 @@ const categoriesService = {
     const categories = await models.Category.findAll({ raw: true });
     return categories;
   },
+
+  async getById(id) {
+    const category = await models.Category.findOne({ where: id }, { raw: true });
+    if (!category) throwCategoryNotFoundError('"categoryIds" not found');
+    return category;
+  },
+
 };
 
 module.exports = categoriesService;

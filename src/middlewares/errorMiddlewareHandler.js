@@ -4,6 +4,7 @@ const errors = {
   NotFoundError: 404,
   Conflict: 409,
   TokenNotFound: 401,
+  CategoryNotFoundError: 400,
 };
 
 /**

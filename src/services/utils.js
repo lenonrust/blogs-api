@@ -22,9 +22,16 @@ const throwTokenNotFound = (message) => {
   throw err;
 };
 
+const throwCategoryNotFoundError = (message) => {
+  const err = new Error(message);
+  err.name = 'CategoryNotFoundError';
+  throw err;
+};
+
 module.exports = {
   throwNotFoundError,
   throwInvalidFields,
   throwConflict,
   throwTokenNotFound,
+  throwCategoryNotFoundError,
 };
