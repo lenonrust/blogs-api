@@ -42,6 +42,16 @@ const postConstroller = {
     const updatedPost = await postService.getById(req.params.id);
     res.json(updatedPost);
   },
+
+  async remove(req, res) {
+      await loginService.validateToken(req.headers.authorization);
+      const { id } = await loginService.readToken(req.headers.authorization);
+      const post = await postService.getById(req.params.id);
+      if (id !== post.userId) throwTokenNotFound('Unauthorized user');
+      await postService.remove(req.params.id);
+      res.status(204).end();
+  },
+
 };
 
 module.exports = postConstroller;

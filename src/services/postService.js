@@ -82,6 +82,16 @@ const postService = {
       await models.BlogPost.update({ title, content }, { where: { id } });
   },
 
+  async remove(id) {
+    console.log(id);
+        try {
+          await models.PostCategory.destroy({ where: { postId: id } });
+          await models.BlogPost.destroy({ where: { id }, raw: true });
+      } catch (error) {
+        console.log(error); 
+      }
+  },
+
 };
 
 module.exports = postService;
