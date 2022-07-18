@@ -31,21 +31,30 @@ const postService = {
         .create(
           { postId: post.id, categoryId: itr }, { transaction: t, raw: true },
         ))); 
-        console.log(post);
         const newPost = post.toJSON();
         return newPost;
       });
       return result;  
   },
+
+  async getAll() {
+      const posts = await models.BlogPost.findAll({ include: 
+     [{
+       model: models.User,
+       as: 'user',
+       attributes: { exclude: ['password'] },
+      },
+      { 
+      model: models.Category,
+      as: 'categories',
+      through: { attributes: { exclude: ['categoryId', 'postId'] } },
+     
+      }],
+      attributes: { exclude: ['UserId'] },
+     });
+      return posts;
+  },
+
 };
 
 module.exports = postService;
-
-// {
-//   "title": "Latest updates, August 1st",
-//   "content": "The whole text for the blog post goes here in this key",
-//   "categoryIds": [1, 2]
-// }
-
-// const [pId] = await models.BlogPost
-// .findAll({ attributes: [Sequelize.fn('max', Sequelize.col('id'))], raw: true });

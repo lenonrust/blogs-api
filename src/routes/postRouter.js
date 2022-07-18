@@ -5,4 +5,6 @@ const postRouter = Router();
 
 postRouter.post('/', postConstroller.create);
 
+postRouter.get('/', postConstroller.getAll);
+
 module.exports = postRouter;
