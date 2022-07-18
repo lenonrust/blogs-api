@@ -21,6 +21,14 @@ const postConstroller = {
     const posts = await postService.getAll();
     res.json(posts);
   },
+
+  async getById(req, res) {
+    const { id } = req.params;
+    await loginService.validateToken(req.headers.authorization);
+    await loginService.readToken(req.headers.authorization);
+    const post = await postService.getById(id);
+    res.json(post);
+  },
 };
 
 module.exports = postConstroller;

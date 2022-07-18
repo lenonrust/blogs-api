@@ -4,6 +4,7 @@ const config = require('../database/config/config');
 
 const sequelize = new Sequelize(config.development);
 const models = require('../database/models');
+const { throwNotFoundError } = require('./utils');
 
 const postService = {
 
@@ -53,6 +54,27 @@ const postService = {
       attributes: { exclude: ['UserId'] },
      });
       return posts;
+  },
+
+  async getById(id) {
+    const post = await models.BlogPost.findOne({
+      where: { id },
+      include: 
+      [{
+        model: models.User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+       },
+       { 
+       model: models.Category,
+       as: 'categories',
+       through: { attributes: { exclude: ['categoryId', 'postId'] } },
+      
+       }],
+       attributes: { exclude: ['UserId'] },
+    });
+    if (!post) throwNotFoundError('Post does not exist');
+    return post;
   },
 
 };
