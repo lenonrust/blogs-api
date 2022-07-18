@@ -77,6 +77,11 @@ const postService = {
     return post;
   },
 
+  async edit(id, changes) {
+      const { title, content } = changes;
+      await models.BlogPost.update({ title, content }, { where: { id } });
+  },
+
 };
 
 module.exports = postService;

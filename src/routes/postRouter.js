@@ -5,6 +5,8 @@ const postRouter = Router();
 
 postRouter.get('/:id', postConstroller.getById);
 
+postRouter.put('/:id', postConstroller.edit);
+
 postRouter.post('/', postConstroller.create);
 
 postRouter.get('/', postConstroller.getAll);

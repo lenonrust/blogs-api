@@ -1,6 +1,7 @@
 const categoriesService = require('../services/categoriesService');
 const loginService = require('../services/loginService');
 const postService = require('../services/postService');
+const { throwTokenNotFound } = require('../services/utils');
 
 const postConstroller = {
   
@@ -28,6 +29,18 @@ const postConstroller = {
     await loginService.readToken(req.headers.authorization);
     const post = await postService.getById(id);
     res.json(post);
+  },
+
+  async edit(req, res) {
+    const changes = req.body;
+    await postService.validatePostBody(changes);
+    await loginService.validateToken(req.headers.authorization);
+    const { id } = await loginService.readToken(req.headers.authorization);
+    const post = await postService.getById(req.params.id);
+    if (id !== post.userId) throwTokenNotFound('Unauthorized user');
+    await postService.edit(req.params.id, changes);
+    const updatedPost = await postService.getById(req.params.id);
+    res.json(updatedPost);
   },
 };
 
