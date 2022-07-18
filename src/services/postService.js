@@ -83,13 +83,27 @@ const postService = {
   },
 
   async remove(id) {
-    console.log(id);
-        try {
           await models.PostCategory.destroy({ where: { postId: id } });
           await models.BlogPost.destroy({ where: { id }, raw: true });
-      } catch (error) {
-        console.log(error); 
-      }
+  },
+
+  async search(term) {
+    const { Op } = Sequelize;
+    const searchPost = await models.BlogPost.findAll({
+      where: { [Op.or]: [
+        { title: { [Op.like]: `%${term}%` } },
+        { content: { [Op.like]: `%${term}%` } },
+        ] },
+      include: 
+      [{ model: models.User, as: 'user', attributes: { exclude: ['password'] } },
+       { model: models.Category,
+         as: 'categories',
+         through: { attributes: { exclude: ['categoryId', 'postId'] } },
+       }],
+       attributes: { exclude: ['UserId'] },
+    });
+    if (!searchPost) return [];
+    return searchPost;
   },
 
 };

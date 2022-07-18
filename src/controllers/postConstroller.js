@@ -52,6 +52,14 @@ const postConstroller = {
       res.status(204).end();
   },
 
+  async search(req, res) {
+    const term = req.query.q;
+    await loginService.validateToken(req.headers.authorization);
+    await loginService.readToken(req.headers.authorization); 
+    const search = await postService.search(term);
+    res.json(search);
+  },
+
 };
 
 module.exports = postConstroller;

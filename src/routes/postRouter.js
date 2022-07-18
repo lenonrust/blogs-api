@@ -3,6 +3,8 @@ const postConstroller = require('../controllers/postConstroller');
 
 const postRouter = Router();
 
+postRouter.get('/search', postConstroller.search);
+
 postRouter.delete('/:id', postConstroller.remove);
 
 postRouter.get('/:id', postConstroller.getById);
