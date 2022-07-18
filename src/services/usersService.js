@@ -40,6 +40,10 @@ const usersService = {
     return user;
   },
 
+  async removeMe(id) {
+    await models.User.destroy({ where: { id } });
+  },
+
 };
 
 module.exports = usersService;

@@ -1,5 +1,6 @@
 const loginService = require('../services/loginService');
 const usersService = require('../services/usersService');
+const { throwTokenNotFound } = require('../services/utils');
 
 const usersController = {
   async create(req, res) {
@@ -22,6 +23,16 @@ const usersController = {
     const user = await usersService.getById(req.params.id);
     res.json(user);
   },
+
+  async removeMe(req, res) {
+    await loginService.validateToken(req.headers.authorization);
+   const { id } = await loginService.readToken(req.headers.authorization);
+   const user = await usersService.getById(id);
+   if (id !== user.id) throwTokenNotFound('User unauthorized');
+   await usersService.removeMe(id);
+   res.status(204).end();
+  },
+
 };
 
 module.exports = usersController;

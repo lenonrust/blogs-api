@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
       references: {
         model: "BlogPosts",
         key: "id"
@@ -18,6 +20,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
       references: {
         model: "Categories",
         key: "id"
