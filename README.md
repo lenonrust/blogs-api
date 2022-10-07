@@ -7,7 +7,7 @@ Esta aplicação em Node.js usa o pacote sequelize para fazer um CRUD de posts.
 
 Desenvolvidos endpoints que estarão conectados ao banco de dados seguindo os princípios do REST;
 
-Para fazer um post é necessário é necessário o usuário realizar uma autenticação, portanto uma relação entre user e post;
+Para fazer um post é necessário o usuário realizar uma autenticação, portanto uma relação entre user e post;
 
 Ao realizar uma postagem é necessário fazer uso da tabela categoria, trabalhando, assim, a relação de posts para categories e de categories para posts.
 
